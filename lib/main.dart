@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:librivox_audiobook/resources/models/audiobook.dart';
+import 'package:librivox_audiobook/resources/models/audiobook_file.dart';
 import 'package:librivox_audiobook/screens/audiobook_details_page.dart';
+import 'package:librivox_audiobook/screens/audiobook_player_page.dart';
 import 'package:librivox_audiobook/screens/home.dart';
 
 void main() {
@@ -26,6 +28,22 @@ final GoRouter _router = GoRouter(
         return AudiobookDetailsPage(audiobook: audiobook);
       },
     ),
+    GoRoute(
+        path: '/audiobook_player',
+        name: '/audiobook_player',
+        builder: (context, state) {
+          final data = state.extra! as Map<String, dynamic>;
+          final Audiobook audiobook = data['audiobook'] as Audiobook;
+          final List<AudiobookFile> audiobookFiles =
+              data['audiobookFiles'] as List<AudiobookFile>;
+          final int index = data['index'] as int;
+
+          return AudiobookPlayerPage(
+            audiobook: audiobook,
+            audiobookFiles: audiobookFiles,
+            index: index,
+          );
+        }),
   ],
 );
 
